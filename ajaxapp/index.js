@@ -12,3 +12,13 @@ button.textContent = 'Push Me';
 
 // body要素の子要素としてbuttonを挿入する
 document.body.appendChild(button);
+
+const userID = 'js-primer-example';
+fetch(`https://api.github.com/users/${encodeURIComponent(userID)}`)
+  .then(response => {
+    console.log(response.status);
+    return response.json().then(userInfo => {
+      // JSONパースされたオブジェクトが渡される
+      console.log(userInfo);
+    });
+  });
