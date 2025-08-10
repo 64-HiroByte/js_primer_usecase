@@ -1,18 +1,45 @@
 // `node:util` モジュールを utilオブジェクトとしてインポートする
-
 import * as util from 'node:util';
 
+// 非同期APIを提供するfs/promisesモジュールを読み込む
+import * as fs from 'node:fs/promises';
+
+// markedモジュールからmarkedオブジェクトをインポートする
+import { marked } from 'marked';
+
+
 // コマンドライン引数を parseArgs 関数でパースする
-const {
+const { 
   values,
   positionals
 } = util.parseArgs({
   // オプションやフラグ以外の引数を渡すことを許可する
-  allowPositionals: true
+  allowPositionals: true,
+  options: {
+    // gfmフラグを定義する
+    gfm: {
+      // オプションの型をbooleanに指定
+      type: 'boolean',
+      // --gfmフラグがない場合のデフォルト値をfalseにする
+      default: false,
+    }
+  }
 });
 // console.log(values);  // オプションやフラグを含むオブジェクト
 // console.log(positionals);  // フラグ以外の引数の配列
 
 const filePath = positionals[0];
-console.log(filePath);
+// console.log(filePath);
 
+
+fs.readFile(filePath, { encoding: 'utf8'}).then(file => {
+  // MarkdownファイルをHTML文字列に変換する
+  const html = marked.parse(file, {
+    // gfmフラグのパース結果をオプションとして渡す
+    gfm: values.gfm
+  });
+  console.log(html);
+}).catch(err => {
+  console.error(err.message);
+  process.exit(1);
+});
