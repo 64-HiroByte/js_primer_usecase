@@ -4,8 +4,8 @@ import * as util from 'node:util';
 // 非同期APIを提供するfs/promisesモジュールを読み込む
 import * as fs from 'node:fs/promises';
 
-// markedモジュールからmarkedオブジェクトをインポートする
-import { marked } from 'marked';
+// md2htmlモジュールからmd2html関数をインポートする
+import { md2html } from './md2html.js'
 
 
 // コマンドライン引数を parseArgs 関数でパースする
@@ -34,7 +34,7 @@ const filePath = positionals[0];
 
 fs.readFile(filePath, { encoding: 'utf8'}).then(file => {
   // MarkdownファイルをHTML文字列に変換する
-  const html = marked.parse(file, {
+  const html = md2html(file, {
     // gfmフラグのパース結果をオプションとして渡す
     gfm: values.gfm
   });
