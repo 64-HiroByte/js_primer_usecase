@@ -20,7 +20,7 @@ export class TodoListModel extends EventEmitter {
 
   /**
    * 表示できるTodo Itemの配列を返す
-   * ＠returns {number}
+   * ＠returns {TodoItemModel[]}
    */
   getTodoItems() {
     return this.#items;
@@ -38,7 +38,7 @@ export class TodoListModel extends EventEmitter {
    * 状態が更新されたときに呼ぶ。登録済みのリスナー関数を呼び出す
    */
   emitChange() {
-    this.this.emit('change');
+    this.emit('change');
   }
 
   /**

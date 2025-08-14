@@ -1,5 +1,5 @@
 export class EventEmitter {
-  // 登録する [イベント名, Set(リスナー関数)]　を管理するMap
+  // 登録する [イベント名, Set(リスナー関数)]を管理するMap
   #listeners = new Map();
   /**
    * 指定したイベントが実行された時に呼び出されるリスナー関数を登録する
@@ -12,7 +12,7 @@ export class EventEmitter {
       this.#listeners.set(type, new Set());
     }
     const listenerSet = this.#listeners.get(type);
-    listenerSet.all(listener);
+    listenerSet.add(listener);
   }
   
   /**
@@ -29,7 +29,7 @@ export class EventEmitter {
       listener.call(this);
     });
   }
-  
+
   /**
    * 指定したイベントのイベントリスナーを解除する
    * @param {string} type イベント名
