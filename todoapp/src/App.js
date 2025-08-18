@@ -39,16 +39,17 @@ export class App {
     // TodoListModelの状態が更新されたら表示を更新する
     this.#todoListModel.onChange(() => {
       const todoItems = this.#todoListModel.getTodoItems();
-      const TodoListView = new TodoListView();
-      // todoItemsに対応するTodoListViewを作成する
-      const todoListElement = TodoListView.createElement(todoItems, {
+      // const TodoListView = new TodoListView();
+      // // todoItemsに対応するTodoListViewを作成する
+      const todoListElement = this.#todoListView.createElement(todoItems, {
         // Todoアイテムが更新イベントを発生したときに呼ばれるリスナー関数
         onUpdateTodo: ({ id, completed }) => {
-          this.#todoListModel.updateTodo({ id, completed });
+          // this.#todoListModel.updateTodo({ id, completed });
+          this.handleUpdate({ id, completed });
         },
         // Todoアイテムが削除イベントを発生したときに呼ばれるリスナー関数
         onDeleteTodo: ({ id }) => {
-          this.#todoListModel.deleteTodo({ id });
+          this.handleDelete({ id });
         }
       });
       // コンテナ要素の中身をTodoリストをまとめるList要素で上書きする
